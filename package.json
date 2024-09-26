@@ -1,0 +1,10 @@
+{
+  "name": "starbase",
+  "version": "0.0.1",
+  "description": "Manage and set up a development environment for Bitwarden",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "Andreas Coroiu (@coroiu)",
+  "license": "ISC"
+}

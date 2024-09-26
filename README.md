@@ -1,4 +1,13 @@
-# Starbase
+<div align="center">
+  <img src="assets/starbase.jpg" alt="Starbase" width="200px" margin="3">
+  <br></br>
+  <h1>Starbase</h1>
+  <p>
+    <strong>Mission Control for Development</strong>
+  </p>
+</div>
+
+## About
 
 Starbase is a project designed to help manage and set up a development environment for Bitwarden. This repository serves as a collection of helpful snippets and parallel commands to rebuild and link multiple repositories efficiently.
 
@@ -11,7 +20,7 @@ Starbase is a project designed to help manage and set up a development environme
 
 ## Limitations
 
-Currently support web + sdk only.
+Currently supports web + sdk only.
 
 ## Usage
 
