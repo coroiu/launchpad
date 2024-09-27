@@ -9,4 +9,11 @@ export const environment = {
       gitUri: "git@github.com:bitwarden/sdk.git",
     },
   },
+  shell: {
+    profile: "src/shell/profile.sh",
+    passthroughVariables: ["NVM_DIR"].reduce((acc, v) => {
+      if (process.env[v]) acc[v] = process.env[v];
+      return acc;
+    }, {} as Record<string, string>),
+  },
 };

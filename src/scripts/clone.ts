@@ -8,8 +8,8 @@ import { runCommand } from "../commands/run-command";
 /**
  * Clones the clients and SDK repositories
  */
-export default async function run() {
-  console.log(chalk.green("> Running script: clone"));
+async function run() {
+  console.log(chalk.green("# Script: clone #"));
 
   const cloneClients = await checkRepositoryShouldClone(
     "clients",
@@ -83,5 +83,4 @@ async function checkRepositoryShouldClone(name: string, path: string): Promise<b
   return true;
 }
 
-// Run the script if it's being executed directly
-if (require.main === module) run().catch(console.error);
+run().catch(console.error);

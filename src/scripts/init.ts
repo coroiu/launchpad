@@ -1,15 +1,15 @@
 import chalk from "chalk";
 
-import clone from "./clone";
+import { runCommand } from "../commands/run-command";
 
 /**
  * Run a series of commands to initialize the entire environment
  */
 async function run() {
-  console.log(chalk.green("> Running script: init"));
+  console.log(chalk.green("# Script: init #"));
 
-  await clone();
+  await runCommand("npm run clone");
+  await runCommand("npm run install-deps");
 }
 
-// Run the script if it's being executed directly
-if (require.main === module) run().catch(console.error);
+run().catch(console.error);
