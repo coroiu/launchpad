@@ -6,7 +6,7 @@ import { environment } from "../environment";
 import { deleteFolder } from "../commands/delete-folder";
 import { runCommand } from "../commands/run-command";
 
-program.version("0.0.1").description("Starbase Repository Initialization");
+program.version("0.0.1").description("Launchpad Repository Initialization");
 
 async function run() {
   const cloneClients = await checkRepositoryShouldClone(
