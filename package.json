@@ -4,7 +4,8 @@
   "description": "Manage and set up a development environment for Bitwarden",
   "main": "index.js",
   "scripts": {
-    "init": "ts-node src/scripts/init.ts"
+    "init": "ts-node src/scripts/init.ts",
+    "clone": "ts-node src/scripts/clone.ts"
   },
   "author": "Andreas Coroiu (@coroiu)",
   "license": "ISC",
