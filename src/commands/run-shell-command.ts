@@ -2,6 +2,13 @@ import chalk from "chalk";
 import { spawn } from "child_process";
 import { environment } from "../environment";
 
+/**
+ * Generate a command object that can be used with `spawn` to run a shell command.
+ * This function will run the command in the shell profile specified in the environment.
+ *
+ * @param command Command to run
+ * @returns Command object
+ */
 export function generateCommand(command: string): {
   command: string;
   args: string[];

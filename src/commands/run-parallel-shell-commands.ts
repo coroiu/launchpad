@@ -2,9 +2,11 @@ import chalk from "chalk";
 import { spawn } from "child_process";
 import { generateCommand } from "./run-shell-command";
 import stringToColor from "string-to-color";
+import { runCommand } from "./run-command";
+import { environment } from "../environment";
 
 export type Command = {
-  name: string;
+  name?: string;
   command: string;
 };
 
@@ -15,8 +17,14 @@ export type Command = {
  * @param commands Commands to run
  */
 export async function runParallelShellCommands(commands: Command[]) {
-  console.log(chalk.green(`> Run parallel commands: [${commands.join(", ")}]`));
+  console.log(
+    chalk.green(`> Run parallel commands: [${commands.map((c) => c.command).join(", ")}]`)
+  );
   console.log("---------------------");
+
+  if (environment.config.parallelizer === "tmux") {
+    return tmuxParallelizer(commands);
+  }
 
   return builtInParallelizer(commands);
 }
@@ -58,4 +66,46 @@ async function builtInParallelizer(commands: Command[]) {
   });
 
   return Promise.all(childProcesses);
+}
+
+async function tmuxParallelizer(commands: Command[]) {
+  if (commands.length === 0) {
+    return;
+  }
+
+  const mappedCommands = commands.map(({ name, command }) => {
+    const originalCommand = command;
+    const { command: cmd, args, env } = generateCommand(command);
+    return {
+      name,
+      command: `${cmd} ${args.join(" ")}`,
+      env,
+      originalCommand,
+    };
+  });
+
+  const tmuxArgs: string[] = [];
+  tmuxArgs.push("new-session", mappedCommands[0].command, ";");
+  tmuxArgs.push("set", "pane-border-status", "top", ";");
+  tmuxArgs.push(
+    "select-pane",
+    "-T",
+    mappedCommands[0].name ?? mappedCommands[0].originalCommand,
+    ";"
+  );
+
+  // Enable switching panes and scrolling with the mouse
+  tmuxArgs.push("set", "mouse", "on", ";");
+  // Enable closing all panes with Ctrl + X
+  tmuxArgs.push("bind-key", "-n", "C-x", "kill-session", ";");
+
+  if (mappedCommands.length > 1) {
+    for (const { command, originalCommand, name } of mappedCommands.slice(1)) {
+      tmuxArgs.push("split-window", "-h", command, ";");
+      tmuxArgs.push("select-pane", "-T", name ?? originalCommand, ";");
+    }
+  }
+
+  await runCommand("tmux", tmuxArgs);
+  // await runCommand("tmux", tmuxArgs, { env: mappedCommands[0].env });
 }
