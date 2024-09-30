@@ -1,6 +1,6 @@
 export const defaultEnvironment = {
   config: {
-    parallelizer: "concurrently" as "concurrently" | "tmux",
+    parallelizer: "built-in" as "built-in" | "tmux",
   },
   repositories: {
     clients: {

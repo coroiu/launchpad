@@ -20,7 +20,9 @@ Launchpad is a project designed to help manage and set up a development environm
 
 ## Limitations
 
-Currently supports web + sdk only.
+- Currently supports web + sdk only.
+- Requires a Unix-like environment (Linux, macOS, WSL).
+- Requires zsh.
 
 ## Usage
 

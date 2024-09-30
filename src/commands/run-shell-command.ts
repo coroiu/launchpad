@@ -2,6 +2,18 @@ import chalk from "chalk";
 import { spawn } from "child_process";
 import { environment } from "../environment";
 
+export function generateCommand(command: string): {
+  command: string;
+  args: string[];
+  env: Record<string, string>;
+} {
+  return {
+    command: "zsh",
+    args: ["-c", `source ${environment.shell.profile}; ${command}`],
+    env: environment.shell.passthroughVariables,
+  };
+}
+
 /**
  * Similar to `runCommand` but uses `sh` as an intermediary to run the command.
  * This is useful for running shell commands that are not directly executable.
@@ -16,9 +28,10 @@ export async function runShellCommand(command: string) {
   console.log(chalk.green(`> Run command: ${command}`));
   console.log("---------------------");
 
-  const child_process = spawn("zsh", ["-c", `source ${environment.shell.profile}; ${command}`], {
+  const { command: cmd, args, env } = generateCommand(command);
+  const child_process = spawn(cmd, args, {
     stdio: "inherit",
-    env: environment.shell.passthroughVariables,
+    env,
   });
 
   return new Promise<void>((resolve, reject) => {
