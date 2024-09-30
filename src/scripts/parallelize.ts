@@ -1,8 +1,5 @@
 import chalk from "chalk";
 import { runParallelShellCommands } from "../commands/run-parallel-shell-commands";
-import { environment } from "../environment";
-
-// import concurrently from "concurrently";
 
 /**
  * Run commands in parallel

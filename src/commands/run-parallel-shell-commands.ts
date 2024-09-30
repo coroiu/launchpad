@@ -109,6 +109,10 @@ async function tmuxParallelizer(commands: Command[]) {
   // Set the layout to tiled
   tmuxArgs.push("select-layout", "tiled", ";");
 
+  // Don't auto-close the session when the command exits to allow debugging
+  // errors that cause the command to exit
+  tmuxArgs.push("set", "remain-on-exit", "on", ";");
+
   await runCommand("tmux", tmuxArgs);
   // await runCommand("tmux", tmuxArgs, { env: mappedCommands[0].env });
 }
