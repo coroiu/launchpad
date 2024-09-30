@@ -101,10 +101,13 @@ async function tmuxParallelizer(commands: Command[]) {
 
   if (mappedCommands.length > 1) {
     for (const { command, originalCommand, name } of mappedCommands.slice(1)) {
-      tmuxArgs.push("split-window", "-h", command, ";");
+      tmuxArgs.push("split-window", command, ";");
       tmuxArgs.push("select-pane", "-T", name ?? originalCommand, ";");
     }
   }
+
+  // Set the layout to tiled
+  tmuxArgs.push("select-layout", "tiled", ";");
 
   await runCommand("tmux", tmuxArgs);
   // await runCommand("tmux", tmuxArgs, { env: mappedCommands[0].env });

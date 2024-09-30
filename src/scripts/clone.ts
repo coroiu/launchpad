@@ -16,6 +16,10 @@ async function run() {
     environment.repositories.clients.localPath
   );
   const cloneSdk = await checkRepositoryShouldClone("sdk", environment.repositories.sdk.localPath);
+  const cloneServer = await checkRepositoryShouldClone(
+    "server",
+    environment.repositories.server.localPath
+  );
 
   // Clone repositories
   if (cloneClients) {
@@ -27,6 +31,12 @@ async function run() {
   if (cloneSdk) {
     await runCommand(
       `git clone --progress ${environment.repositories.sdk.gitUri} ${environment.repositories.sdk.localPath}`
+    );
+  }
+
+  if (cloneServer) {
+    await runCommand(
+      `git clone --progress ${environment.repositories.server.gitUri} ${environment.repositories.server.localPath}`
     );
   }
 }

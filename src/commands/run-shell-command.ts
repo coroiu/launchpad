@@ -16,8 +16,11 @@ export function generateCommand(command: string): {
 } {
   return {
     command: "zsh",
-    args: ["-c", `source ${environment.shell.profile}; ${command}`],
-    env: environment.shell.passthroughVariables,
+    args: ["-c", `'source ${environment.shell.profile}'; ${command}`],
+    env: {
+      LAUNCHPAD_CUSTOM_PROFILE: environment.shell.customProfile ?? "",
+      ...environment.shell.passthroughVariables,
+    },
   };
 }
 
