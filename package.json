@@ -4,7 +4,9 @@
   "description": "Manage and set up a development environment for Bitwarden",
   "main": "index.js",
   "scripts": {
-    "preinstall": "echo 'running install in root'",
+    "concurrent": "concurrently \"npm run dev:web\" \"npm run dev:browser\"",
+    "init:custom-env": "cp -n custom-env.example.ts .custom-env.ts",
+    "preinstall": "npm run init:custom-env",
     "init": "ts-node src/scripts/init.ts",
     "clone": "ts-node src/scripts/clone.ts",
     "install-deps": "ts-node src/scripts/install-deps.ts",
@@ -19,7 +21,9 @@
     "chalk": "^4.1.2",
     "commander": "^12.1.0",
     "inquirer": "^11.0.2",
+    "ts-deepmerge": "^7.0.1",
     "ts-node": "^10.9.2",
+    "type-fest": "^4.26.1",
     "typescript": "^5.6.2"
   }
 }
