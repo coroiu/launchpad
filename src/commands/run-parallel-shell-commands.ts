@@ -22,7 +22,10 @@ export async function runParallelShellCommands(commands: Command[]) {
   );
   console.log("---------------------");
 
-  if (environment.config.parallelizer === "tmux") {
+  if (
+    environment.config.parallelizer === "tmux" ||
+    environment.config.parallelizer === "tmux-iterm"
+  ) {
     return tmuxParallelizer(commands);
   }
 
@@ -85,6 +88,9 @@ async function tmuxParallelizer(commands: Command[]) {
   });
 
   const tmuxArgs: string[] = [];
+  if (environment.config.parallelizer === "tmux-iterm") {
+    tmuxArgs.push("-CC");
+  }
   tmuxArgs.push("new-session", mappedCommands[0].command, ";");
   tmuxArgs.push("set", "pane-border-status", "top", ";");
   tmuxArgs.push(

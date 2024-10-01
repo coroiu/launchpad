@@ -1,6 +1,13 @@
 export const defaultEnvironment = {
   config: {
-    parallelizer: "built-in" as "built-in" | "tmux",
+    /**
+     * The parallelizer to use for running multiple commands at once.
+     * - "built-in": Run commands in parallel using Node.js child processes
+     * - "tmux": Run commands in parallel using tmux
+     * - "tmux-iterm": Run commands in parallel using tmux, with iTerm-integration (-CC flag)
+     *   For more information, see: https://gitlab.com/gnachman/iterm2/-/wikis/TmuxIntegration
+     */
+    parallelizer: "built-in" as "built-in" | "tmux" | "tmux-iterm",
   },
   repositories: {
     clients: {
