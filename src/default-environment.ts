@@ -27,9 +27,6 @@ export const defaultEnvironment = {
     profile: "src/shell/profile.sh",
     // Additional shell profile to load, can't use "~" for home directory for some reason
     customProfile: undefined as string | undefined,
-    passthroughVariables: ["NVM_DIR", "HOME", "COLORTERM", "TERM"].reduce((acc, v) => {
-      if (process.env[v]) acc[v] = process.env[v];
-      return acc;
-    }, {} as Record<string, string>),
+    passthroughVariables: process.env as Record<string, string>,
   },
 };
