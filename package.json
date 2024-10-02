@@ -17,6 +17,7 @@
     "dev:browser": "npm run shell -- 'cd repositories/clients/apps/browser && npm run build:watch'",
     "dev:browser:mv2": "npm run shell -- 'cd repositories/clients/apps/browser && npm run build:watch:mv2'",
     "dev:browser:mv3": "npm run dev:browser",
+    "dev:desktop": "npm run shell -- 'cd repositories/clients/apps/desktop && npm run electron'",
     "dev:web_browser": "npm run parallelize -- \"npm run dev:web\" \"npm run dev:browser\"",
     "dev:api_identity_web_browser": "npm run parallelize -- \"npm run dev:api\" \"npm run dev:identity\" \"npm run dev:web\" \"npm run dev:browser\""
   },
