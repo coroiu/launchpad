@@ -10,6 +10,9 @@ async function run() {
   console.log(chalk.green("# Script: install #"));
 
   await runShellCommand(`cd ${environment.repositories.clients.localPath} && npm ci`);
+  await runShellCommand(
+    `cd ${environment.repositories.clients.localPath} && npm link ../sdk/languages/sdk-client ../sdk/languages/sdk-internal`
+  );
   await runShellCommand(`cd ${environment.repositories.server.localPath} && dotnet restore`);
 }
 
