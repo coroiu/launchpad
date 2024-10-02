@@ -85,28 +85,30 @@ async function oraWarningPromise<T>(
 }
 
 async function setupNpmRegistry() {
-  const hasGhCli = await oraWarningPromise(checkGhCli(), {
-    text: "GitHub CLI",
-    successText: "GitHub CLI found!",
-    failText: "GitHub CLI not found",
-  })
-    .then(() => true)
-    .catch(() => false);
-  const ghCliToken = await oraWarningPromise(fetchGhCliToken(), {
-    text: "GitHub CLI logged in?",
-    successText: "GitHub CLI token found!",
-    failText: "GitHub CLI not logged in",
-  }).catch(() => false);
+  // Automatic setup with GitHub CLI is not supported
+  // const hasGhCli = await oraWarningPromise(checkGhCli(), {
+  //   text: "GitHub CLI",
+  //   successText: "GitHub CLI found!",
+  //   failText: "GitHub CLI not found",
+  // })
+  //   .then(() => true)
+  //   .catch(() => false);
+  // const ghCliToken = await oraWarningPromise(fetchGhCliToken(), {
+  //   text: "GitHub CLI logged in?",
+  //   successText: "GitHub CLI token found!",
+  //   failText: "GitHub CLI not logged in",
+  // }).catch(() => false);
 
-  if (
-    hasGhCli &&
-    typeof ghCliToken === "string" &&
-    (await setupNpmRegistryWithGhCliToken(ghCliToken))
-  ) {
-    return true;
-  }
+  // if (
+  //   hasGhCli &&
+  //   typeof ghCliToken === "string" &&
+  //   (await setupNpmRegistryWithGhCliToken(ghCliToken))
+  // ) {
+  //   return true;
+  // }
 
-  console.log(chalk.yellow("Could not login to GitHub NPM registry with GitHub CLI token"));
+  // console.log(chalk.yellow("Could not login to GitHub NPM registry with GitHub CLI token"));
+
   return setupNpmRegistryManually();
 }
 
