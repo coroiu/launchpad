@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 import { folderExists } from "../commands/folder-exists";
 import { environment } from "../environment";
 import { deleteFolder } from "../commands/delete-folder";
-import { runCommand } from "../commands/run-command";
+import { runShellBinary } from "../commands/run-shell-binary";
 
 /**
  * Clones the clients and SDK repositories
@@ -23,19 +23,19 @@ async function run() {
 
   // Clone repositories
   if (cloneClients) {
-    await runCommand(
+    await runShellBinary(
       `git clone --progress ${environment.repositories.clients.gitUri} ${environment.repositories.clients.localPath}`
     );
   }
 
   if (cloneSdk) {
-    await runCommand(
+    await runShellBinary(
       `git clone --progress ${environment.repositories.sdk.gitUri} ${environment.repositories.sdk.localPath}`
     );
   }
 
   if (cloneServer) {
-    await runCommand(
+    await runShellBinary(
       `git clone --progress ${environment.repositories.server.gitUri} ${environment.repositories.server.localPath}`
     );
   }

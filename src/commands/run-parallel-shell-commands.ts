@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { spawn } from "child_process";
 import { generateCommand } from "./run-shell-command";
 import stringToColor from "string-to-color";
-import { runCommand } from "./run-command";
+import { runShellBinary } from "./run-shell-binary";
 import { environment } from "../environment";
 
 export type Command = {
@@ -119,6 +119,6 @@ async function tmuxParallelizer(commands: Command[]) {
   // errors that cause the command to exit
   tmuxArgs.push("set", "remain-on-exit", "on", ";");
 
-  await runCommand("tmux", tmuxArgs);
-  // await runCommand("tmux", tmuxArgs, { env: mappedCommands[0].env });
+  await runShellBinary("tmux", tmuxArgs);
+  // await runShellBinary("tmux", tmuxArgs, { env: mappedCommands[0].env });
 }

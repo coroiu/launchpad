@@ -25,7 +25,7 @@ export function generateCommand(command: string): {
 }
 
 /**
- * Similar to `runCommand` but uses `sh` as an intermediary to run the command.
+ * Similar to `runShellBinary` but uses `sh` as an intermediary to run the command.
  * This is useful for running shell commands that are not directly executable.
  * Example: `runShellCommand("echo 'Hello, World!'")`
  *

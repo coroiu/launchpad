@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { spawn } from "child_process";
 
 /**
- * Execute a command without a shell.
+ * Execute a binary and use the existing shell's stdio.
  * Note that this means that shell-specific features like environment variable expansion are not available.
  * No custom profiles or aliases are available, meaning that NVM and similar tools will not work.
  *
@@ -10,7 +10,7 @@ import { spawn } from "child_process";
  * @param options Options
  * @returns Promise that resolves when the command finishes
  */
-export async function runCommand(
+export async function runShellBinary(
   command: string,
   args?: string[],
   options?: { cwd?: string; env?: Record<string, string> }
