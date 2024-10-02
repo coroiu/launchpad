@@ -10,6 +10,7 @@
     "init:custom-env": "cp -n custom-env.example.ts .custom-env.ts",
     "preinstall": "npm run init:custom-env",
     "init": "tsx src/scripts/init.ts",
+    "setup-environment": "tsx src/scripts/setup-environment.ts",
     "clone": "tsx src/scripts/clone.ts",
     "install-deps": "tsx src/scripts/install-deps.ts",
     "dev:api": "npm run shell -- 'cd repositories/server/src/Api && dotnet run'",
@@ -25,7 +26,6 @@
   "author": "Andreas Coroiu (@coroiu)",
   "license": "ISC",
   "dependencies": {
-    "@topcli/spinner": "^2.1.2",
     "chalk": "^4.1.2",
     "commander": "^12.1.0",
     "inquirer": "^11.0.2",

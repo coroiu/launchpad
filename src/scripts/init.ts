@@ -9,6 +9,7 @@ async function run() {
   console.log(chalk.green("# Script: init #"));
 
   await runShellBinary("npm run clone");
+  await runShellBinary("npm run setup-environment");
   await runShellBinary("npm run install-deps");
 }
 
