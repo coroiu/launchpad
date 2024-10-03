@@ -11,10 +11,12 @@ async function run() {
   console.log(chalk.green("# Script: install #"));
 
   await runShellCommand(`cd ${environment.repositories.clients.localPath} && npm ci`);
-  // TODO: we should really use absolute paths here
-  await runShellCommand(
-    `cd ${environment.repositories.clients.localPath} && npm link @bitwarden/sdk-internal ../../repositories/sdk/languages/js/sdk-internal`
-  );
+  if (environment.config.useLocalSdk) {
+    // TODO: we should really use absolute paths here
+    await runShellCommand(
+      `cd ${environment.repositories.clients.localPath} && npm link @bitwarden/sdk-internal ../../repositories/sdk/languages/js/sdk-internal`
+    );
+  }
   await runShellCommand(`cd ${environment.repositories.server.localPath} && dotnet restore`);
 }
 

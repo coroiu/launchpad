@@ -8,6 +8,13 @@ export const defaultEnvironment = {
      *   For more information, see: https://gitlab.com/gnachman/iterm2/-/wikis/TmuxIntegration
      */
     parallelizer: "built-in" as "built-in" | "tmux" | "tmux-iterm",
+    /**
+     * Whether to use the local SDK repository for building the clients. If true the NPM package
+     * will be linked to the local SDK repository, otherwise the SDK will be installed from NPM.
+     *
+     * Changing this value will require running `npm run install-deps` to take effect.
+     */
+    useLocalSdk: false,
   },
   repositories: {
     clients: {
