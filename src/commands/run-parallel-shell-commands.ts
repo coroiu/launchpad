@@ -57,7 +57,7 @@ async function builtInParallelizer(commands: Command[]) {
     });
 
     return new Promise<void>((resolve, reject) => {
-      childProcess.on("close", (code: number) => {
+      childProcess.on("exit", (code: number) => {
         if (code === 0) {
           resolve();
         } else {

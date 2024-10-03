@@ -4,6 +4,7 @@ import { folderExists } from "../commands/folder-exists";
 import { environment } from "../environment";
 import { deleteFolder } from "../commands/delete-folder";
 import { runShellBinary } from "../commands/run-shell-binary";
+import { runMain } from "../commands/run-main";
 
 /**
  * Clones the clients and SDK repositories
@@ -93,4 +94,4 @@ async function checkRepositoryShouldClone(name: string, path: string): Promise<b
   return true;
 }
 
-run().catch(console.error);
+runMain(run);

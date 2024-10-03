@@ -1,6 +1,7 @@
 import chalk from "chalk";
 
 import { runShellBinary } from "../commands/run-shell-binary";
+import { runMain } from "../commands/run-main";
 
 /**
  * Run a series of commands to initialize the entire environment
@@ -8,9 +9,9 @@ import { runShellBinary } from "../commands/run-shell-binary";
 async function run() {
   console.log(chalk.green("# Script: init #"));
 
-  await runShellBinary("npm run clone");
   await runShellBinary("npm run setup-environment");
+  await runShellBinary("npm run clone");
   await runShellBinary("npm run install-deps");
 }
 
-run().catch(console.error);
+runMain(run);

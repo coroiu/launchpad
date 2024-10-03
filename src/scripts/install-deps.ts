@@ -2,6 +2,7 @@ import chalk from "chalk";
 
 import { runShellCommand } from "../commands/run-shell-command";
 import { environment } from "../environment";
+import { runMain } from "../commands/run-main";
 
 /**
  * Run install commands in all package managers
@@ -17,4 +18,4 @@ async function run() {
   await runShellCommand(`cd ${environment.repositories.server.localPath} && dotnet restore`);
 }
 
-run().catch(console.error);
+runMain(run);

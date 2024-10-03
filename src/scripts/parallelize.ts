@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { runParallelShellCommands } from "../commands/run-parallel-shell-commands";
+import { runMain } from "../commands/run-main";
 
 /**
  * Run commands in parallel
@@ -15,4 +16,4 @@ async function run() {
   return await runParallelShellCommands(commands);
 }
 
-run().catch(console.error);
+runMain(run);

@@ -47,7 +47,8 @@ else
   # echo "nvm is not installed, skipping nvm setup."
 fi
 
-echo "Launchpad profile loaded"
+# echo "Launchpad profile loaded"
 
 # Load custom profile if configured and exists
-[ -f "$LAUNCHPAD_CUSTOM_PROFILE" ] && echo "Custom launchpad profile loaded" && source "$LAUNCHPAD_CUSTOM_PROFILE"
+[ -f "$LAUNCHPAD_CUSTOM_PROFILE" ] && source "$LAUNCHPAD_CUSTOM_PROFILE"
+# [ -f "$LAUNCHPAD_CUSTOM_PROFILE" ] && echo "Custom launchpad profile loaded" && source "$LAUNCHPAD_CUSTOM_PROFILE"

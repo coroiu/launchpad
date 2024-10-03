@@ -45,7 +45,7 @@ export async function runShellCommand(command: string) {
   });
 
   return new Promise<void>((resolve, reject) => {
-    child_process.on("close", (code: number) => {
+    child_process.on("exit", (code: number) => {
       console.log("---------------------");
       if (code === 0) {
         resolve();

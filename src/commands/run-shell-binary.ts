@@ -34,7 +34,7 @@ export async function runShellBinary(
   });
 
   return new Promise<void>((resolve, reject) => {
-    child_process.on("close", (code: number) => {
+    child_process.on("exit", (code: number) => {
       console.log("---------------------");
       if (code === 0) {
         // console.log(chalk.green("Command finished successfully."));

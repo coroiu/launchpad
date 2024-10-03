@@ -4,6 +4,8 @@ import ora, { oraPromise } from "ora";
 import inquirer from "inquirer";
 import { runShellBinary } from "../commands/run-shell-binary";
 import { runShellCommand } from "../commands/run-shell-command";
+import { environment } from "../environment";
+import { runMain } from "../commands/run-main";
 
 /**
  * Check that the environment is properly setup to run the project
@@ -13,12 +15,17 @@ async function run() {
 
   const dotnet = oraPromise(checkDotnet(), {
     text: "Dotnet CLI",
-    successText: "Dotnet CLI found!",
+    successText: (output) => `Dotnet CLI found, verion: ${output}`,
   });
   const npm = oraPromise(checkNpmRegistry(), {
     text: "GitHub NPM registry access",
     successText: (output) => `Logged in to GitHub NPM as: ${output}`,
     failText: "Could not access NPM GitHub registry",
+  });
+  const nvm = oraPromise(checkNvm(), {
+    text: "Node Version Manager (NVM)",
+    successText: (output) => `NVM found, version: ${output}`,
+    failText: "NVM not found",
   });
 
   try {
@@ -47,14 +54,88 @@ async function run() {
       failText: "Could not setup GitHub NPM registry, please login manually",
     });
   }
+
+  try {
+    await nvm;
+  } catch {
+    console.error(
+      chalk.red("NVM is not installed or not in PATH, it is highly recommended to install it")
+    );
+    if (!(await installNvm())) {
+      console.error(chalk.red("Could not install NVM, please install it manually"));
+      process.exit(1);
+    }
+  }
 }
 
-async function checkDotnet() {
-  await runCommand("dotnet --version");
+function checkDotnet() {
+  return runCommand("dotnet --version", { env: environment.shell.passthroughVariables }).then(
+    (output) => output.trim()
+  );
 }
 
 function checkNpmRegistry() {
-  return runCommand("npm whoami --registry=https://npm.pkg.github.com");
+  return runCommand("npm whoami --registry=https://npm.pkg.github.com", {
+    env: environment.shell.passthroughVariables,
+  }).then((output) => output.trim());
+}
+
+function checkNvm() {
+  return runCommand(`zsh -c 'source ${environment.shell.profile}; nvm --version'`, {
+    env: environment.shell.passthroughVariables,
+  }).then((output) => output.trim());
+}
+
+async function installNvm(): Promise<boolean> {
+  const confirmInstallNvm = await inquirer.prompt([
+    {
+      type: "select",
+      name: "install",
+      choices: [
+        { name: "Install the latest version automatically", value: "yes" },
+        { name: "Abort this setup and let me install it manually", value: "manually" },
+        { name: "Continue without", value: "without" },
+      ],
+      default: "yes",
+      message: chalk.white(`Do you want to install NVM?`),
+    },
+  ]);
+
+  if (confirmInstallNvm.install === "manually") {
+    console.log(
+      chalk.yellow(
+        "Please install NVM manually by following the instructions at https://github.com/nvm-sh/nvm"
+      )
+    );
+
+    console.log(
+      chalk.yellow(
+        "Remember to source your shell profile after installing NVM to make it available in your shell before running this setup again."
+      )
+    );
+    return true;
+  }
+
+  if (confirmInstallNvm.install === "without") {
+    console.log(chalk.yellow("Continuing without NVM, this is not recommended"));
+    return true;
+  }
+
+  console.log(chalk.white("Installing nvm..."));
+
+  await runShellCommand(
+    "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | zsh"
+  )
+    .then(() => true)
+    .catch(() => false);
+
+  return oraPromise(checkNvm(), {
+    text: "Node Version Manager (NVM)",
+    successText: (output) => `NVM found, version: ${output}`,
+    failText: "NVM not found",
+  })
+    .then(() => true)
+    .then(() => false);
 }
 
 async function checkGhCli() {
@@ -164,4 +245,4 @@ async function setupNpmRegistryManually(): Promise<boolean> {
 
 // Node thinks we don't handle errors
 process.on("unhandledRejection", () => {});
-run().catch(console.error);
+runMain(run);
