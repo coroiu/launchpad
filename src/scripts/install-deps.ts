@@ -11,6 +11,7 @@ async function run() {
   console.log(chalk.green("# Script: install #"));
 
   await runShellCommand(`cd ${environment.repositories.clients.localPath} && npm ci`);
+  await runShellCommand(`cd ${environment.repositories.sdk.localPath} && npm ci`);
   if (environment.config.useLocalSdk) {
     // TODO: we should really use absolute paths here
     await runShellCommand(
