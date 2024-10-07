@@ -17,11 +17,11 @@ async function run() {
     text: "Dotnet CLI",
     successText: (output) => `Dotnet CLI found, verion: ${output}`,
   });
-  const npm = oraPromise(checkNpmRegistry(), {
-    text: "GitHub NPM registry access",
-    successText: (output) => `Logged in to GitHub NPM as: ${output}`,
-    failText: "Could not access NPM GitHub registry",
-  });
+  // const npm = oraPromise(checkNpmRegistry(), {
+  //   text: "GitHub NPM registry access",
+  //   successText: (output) => `Logged in to GitHub NPM as: ${output}`,
+  //   failText: "Could not access NPM GitHub registry",
+  // });
   const nvm = oraPromise(checkNvm(), {
     text: "Node Version Manager (NVM)",
     successText: (output) => `NVM found, version: ${output}`,
@@ -35,25 +35,25 @@ async function run() {
     process.exit(1);
   }
 
-  try {
-    await npm;
-  } catch {
-    if (!(await setupNpmRegistry())) {
-      console.error(chalk.red("Could not setup GitHub NPM registry, please login manually"));
-      console.log(
-        chalk.white(
-          "For more information, see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token"
-        )
-      );
-      process.exit(1);
-    }
-
-    await oraPromise(checkNpmRegistry(), {
-      text: "GitHub NPM registry access",
-      successText: (output) => `GitHub NPM registry setup successfully! Logged in as: ${output}`,
-      failText: "Could not setup GitHub NPM registry, please login manually",
-    });
-  }
+  // try {
+  //   await npm;
+  // } catch {
+  //   if (!(await setupNpmRegistry())) {
+  //     console.error(chalk.red("Could not setup GitHub NPM registry, please login manually"));
+  //     console.log(
+  //       chalk.white(
+  //         "For more information, see: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token"
+  //       )
+  //     );
+  //     process.exit(1);
+  //   }
+  //
+  //   await oraPromise(checkNpmRegistry(), {
+  //     text: "GitHub NPM registry access",
+  //     successText: (output) => `GitHub NPM registry setup successfully! Logged in as: ${output}`,
+  //     failText: "Could not setup GitHub NPM registry, please login manually",
+  //   });
+  // }
 
   try {
     await nvm;
