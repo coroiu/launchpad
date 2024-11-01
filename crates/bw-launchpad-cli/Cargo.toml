@@ -13,3 +13,4 @@ name = "bwl"
 path = "src/main.rs"
 
 [dependencies]
+clap = "4.5.20"
