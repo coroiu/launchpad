@@ -8,4 +8,8 @@ edition.workspace = true
 name = "launchpad"
 path = "src/main.rs"
 
+[[bin]]
+name = "bwl"
+path = "src/main.rs"
+
 [dependencies]
