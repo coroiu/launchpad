@@ -1,7 +1,8 @@
-use crate::shell::Shell;
+use crate::{config::Config, shell::Shell};
 
 pub struct Context {
     pub shell: Shell,
+    pub config: Config,
 }
 
 impl Context {

@@ -11,7 +11,8 @@ use context::Context;
 fn main() {
     let config = Config::new();
     let context = Context {
-        shell: shell::Shell::new(config.shell),
+        shell: shell::Shell::new(config.shell.clone()),
+        config,
     };
 
     Cli::run(None, &context);
