@@ -28,10 +28,7 @@ fn clone_repository(context: &Context, name: &str, url: &String, path: &String) 
         cliclack::log::info(format!("Cloning {name}...")).expect("Encountered I/O Error");
         context
             .shell
-            .run_inline_shell_command(format!("echo 'git clone {} {}'", url, path));
-        // context
-        //     .shell
-        //     .run_inline_shell_command(format!("git clone {} {}", url, path));
+            .run_inline_shell_command(format!("git clone {} {}", url, path));
     }
 }
 
@@ -39,7 +36,9 @@ fn should_clone(name: &str, path: &String) -> bool {
     let path_exists = std::path::Path::new(&path).exists();
 
     if path_exists {
-        let should_delete = cliclack::select(format!("Initializing a new {name} repository will delete the existing one. Are you sure you want to proceed?)"))
+        cliclack::log::warning(format!("Found existing {name} repository."))
+            .expect("Encountered I/O Error");
+        let should_delete = cliclack::select(format!("Initializing a new {name} repository will delete the existing one. Are you sure you want to proceed?"))
             .item(false, "Use as-is", "")
             .item(true, "Delete", "")
             .interact()
@@ -49,6 +48,7 @@ fn should_clone(name: &str, path: &String) -> bool {
             cliclack::confirm(format!(
                 "Are you sure you want to delete the existing {name} repository?"
             ))
+            .initial_value(false)
             .interact()
             .expect("Encountered I/O Error")
         } else {
@@ -57,10 +57,12 @@ fn should_clone(name: &str, path: &String) -> bool {
 
         if should_delete {
             std::fs::remove_dir_all(&path).expect("Failed to delete directory");
+            cliclack::log::success(format!("Deleted existing {name} repository."))
+                .expect("Encountered I/O Error");
             return true;
         }
 
-        cliclack::log::info(format!("Using existing ${name} repository as-is."))
+        cliclack::log::info(format!("Using existing {name} repository as-is."))
             .expect("Encountered I/O Error");
         return false;
     }
