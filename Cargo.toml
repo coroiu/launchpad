@@ -1,0 +1,9 @@
+[workspace]
+members = ["crates/*"]
+default-members = ["crates/bw-launchpad-cli"]
+resolver = "2"
+
+[workspace.package]
+version = "0.0.1"
+authors = ["Andreas Coroiu"]
+edition = "2021"

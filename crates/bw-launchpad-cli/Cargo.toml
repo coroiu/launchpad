@@ -1,0 +1,11 @@
+[package]
+name = "bw-launchpad-cli"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "launchpad"
+path = "src/main.rs"
+
+[dependencies]
