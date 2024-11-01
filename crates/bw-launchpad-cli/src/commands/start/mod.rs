@@ -23,7 +23,7 @@ pub struct StartArgs {
     pub desktop: Option<Option<String>>,
 }
 
-pub fn start(context: &Context, args: StartArgs) {
+pub fn start(context: &Context, args: &StartArgs) {
     if let Some(Some(ref web_command)) = args.web {
         println!("Web command: {:?}", web_command);
         context
