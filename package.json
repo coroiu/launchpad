@@ -16,6 +16,7 @@
     "build:sdk": "npm run shell -- repositories/sdk/crates/bitwarden-wasm-internal/build.sh",
     "dev:api": "npm run shell -- 'cd repositories/server/src/Api && dotnet run'",
     "dev:identity": "npm run shell -- 'cd repositories/server/src/Identity && dotnet run'",
+    "dev:server": "npm run parallelize -- \"npm run dev:api\" \"npm run dev:identity\"",
     "dev:sdk": "chokidar 'repositories/sdk/**/*.(rs)' -c 'repositories/sdk/crates/bitwarden-wasm-internal/build.sh'",
     "dev:web": "npm run shell -- 'cd repositories/clients/apps/web && npm run build:bit:dev:watch'",
     "dev:browser": "npm run shell -- 'cd repositories/clients/apps/browser && npm run build:watch'",

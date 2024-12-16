@@ -15,7 +15,7 @@ async function run() {
   if (environment.config.useLocalSdk) {
     // TODO: we should really use absolute paths here
     await runShellCommand(
-      `cd ${environment.repositories.clients.localPath} && npm link @bitwarden/sdk-internal ../../repositories/sdk/languages/js/sdk-internal`
+      `cd ${environment.repositories.clients.localPath} && npm link @bitwarden/sdk-internal ../../repositories/sdk/crates/bitwarden-wasm-internal/npm`
     );
   }
   await runShellCommand(`cd ${environment.repositories.server.localPath} && dotnet restore`);
